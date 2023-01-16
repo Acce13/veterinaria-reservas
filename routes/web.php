@@ -15,5 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () { return view('welcome'); });
+Route::post('/citas/horas-del-dia', [CitaController::class, 'getHoursDay'])->name('citas.getHoursDay');
+Route::post('/citas/mi-reserva', [CitaController::class, 'getMyBooking'])->name('citas.getMyBooking');
 Route::post('/citas/horas-disponibles', [CitaController::class, 'getAvailableHours'])->name('citas.getAvailableHours');
 Route::resource('citas', CitaController::class);

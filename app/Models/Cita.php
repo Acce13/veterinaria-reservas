@@ -15,4 +15,15 @@ class Cita extends Model
         'fecha',
         'reservado',
     ];
+
+    //RelationShip
+    public function cliente()
+    {
+        return $this->belongsTo(Cliente::class, 'cliente_id');
+    }
+
+    public function hora()
+    {
+        return $this->belongsTo(Hora::class, 'hora_id');
+    }
 }

@@ -1,8 +1,41 @@
+:root {
+    --v-color-white: #FFFFFF;
+    --v-color-primary: #8BC6EC;
+    --v-color-secondary: #9599E2;
+}
+
 .inicio {
     min-height: 100vh;
     background-image: linear-gradient(135deg, rgba(139, 198, 236, 0.8) 0%, rgba(149, 153, 226, 0.8) 100%), url("../backgrounds/background-inicio.jpg");
     background-size: cover;
     background-position: center;
+}
+
+.inicio__btn {
+    background: var(--v-color-white);
+    color: var(--v-color-primary);
+    width: 7.5rem;
+    height: 7.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.inicio__btn-icon {
+    font-size: 2rem;
+}
+
+.inicio__btn-text {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.inicio__btn:hover {
+    color: var(--v-color-secondary);
+}
+
+.inicio__btn:focus {
+    box-shadow: 0 0 0 0.25rem rgb(149, 153, 226);
 }
 
 .citas {

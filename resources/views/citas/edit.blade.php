@@ -5,6 +5,15 @@
     <div class="container py-3">
         <div class="row g-0 justify-content-center">
             <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-7 col-xxl-6">
+                <div class="card shadow mb-2">
+                    <div class="card-body">
+                        <h6>Información de la cita</h6>
+                        <p class="m-0">Fecha: {{ $cita->fecha }}</p>
+                        <p class="m-0">Hora: {{ $cita->hora->hora }}</p>
+                        <p class="m-0">Paciente: {{ $cita->cliente->nombre_mascota }}</p>
+                        <p class="m-0">Estado: <span class="badge {{ ($cita->reservado) ? 'bg-success' : 'bg-danger' }}">{{ ($cita->reservado) ? 'Reservado' : 'Finalizado' }}</span></p>
+                    </div>
+                </div>
                 <div class="card shadow">
                     <div class="card-body">
                         @if (session('warning'))
@@ -13,31 +22,11 @@
                         @if (session('success'))
                             <div class="alert alert-success">{{ session('success') }}</div>
                         @endif
-                        <form action="{{ route('citas.store') }}" method="post">
+                        <form action="{{ route('citas.update', $cita) }}" method="POST">
                             @csrf
-                            @method('post')
+                            @method('put')
                             <div class="mb-3">
-                                <label for="inputNumeroDocumento" class="form-label">Número de Documento <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="inputNumeroDocumento" name="numero_documento" placeholder="Número de Documento" value="{{ old('numero_documento') }}" required>
-                                @error('numero_documento') <span class="text-center">{{ $message }}</span> @enderror
-                            </div>
-                            <div class="mb-3">
-                                <label for="inputNombre" class="form-label">Nombre <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="inputNombre" name="nombre" placeholder="Nombre" value="{{ old('nombre') }}" required>
-                                @error('nombre') <span class="text-center">{{ $message }}</span> @enderror
-                            </div>
-                            <div class="mb-3">
-                                <label for="inputApellido" class="form-label">Apellido <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="inputApellido" name="apellido" placeholder="Apellido" value="{{ old('apellido') }}" required>
-                                @error('apellido') <span class="text-center">{{ $message }}</span> @enderror
-                            </div>
-                            <div class="mb-3">
-                                <label for="inputNombreMascota" class="form-label">Nombre de la mascota <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="inputNombreMascota" name="nombre_mascota" placeholder="Nombre de la mascota" value="{{ old('nombre_mascota') }}" required>
-                                @error('nombre_mascota') <span class="text-center">{{ $message }}</span> @enderror
-                            </div>
-                            <div class="mb-3">
-                                <label for="inputFecha" class="form-label">Fecha <span class="text-danger">*</span></label>
+                                <label for="inputFecha" class="form-label">Nueva Fecha <span class="text-danger">*</span></label>
                                 <input type="date" class="form-control" id="inputFecha" name="fecha" placeholder="Fecha" value="{{ old('fecha') }}" required>
                                 @error('fecha') <span class="text-center">{{ $message }}</span> @enderror
                             </div>
@@ -49,8 +38,17 @@
                                 @error('hora') <span class="text-center">{{ $message }}</span> @enderror
                             </div>
                             <div class="mt-3">
-                                <div class="d-grid">
-                                    <button class="btn btn-primary rounded-pill">Reservar</button>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="d-grid">
+                                            <button type="submit" class="btn btn-primary rounded-pill">Actualizar</button>
+                                        </div>  
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="d-grid">
+                                            <button type="button" class="btn btn-danger rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal">Cancelar</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -62,6 +60,28 @@
     <!-- Floating Buttons -->
     <div class="floating-button-group">
         <a href="{{ route('citas.index') }}" class="btn btn-primary floating-button shadow d-flex justify-content-center align-items-center"><i class="bi bi-arrow-left"></i></a>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ route('citas.destroy', $cita) }}" method="POST">
+                    @csrf
+                    @method('delete')
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Cancelar Reserva</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="m-0">¿Estás seguro de cancelar la reserva?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </section>
 @endsection

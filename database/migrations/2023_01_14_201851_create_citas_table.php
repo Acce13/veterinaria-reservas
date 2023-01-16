@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('cliente_id');
             $table->foreign('cliente_id')->references('id')->on('clientes');
-            $table->unsignedBigInteger('hora_id');
+            $table->unsignedBigInteger('hora_id')->nullable();
             $table->foreign('hora_id')->references('id')->on('horas');
             $table->date('fecha');
             $table->boolean('reservado')->default(true);

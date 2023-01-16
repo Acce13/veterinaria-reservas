@@ -15,4 +15,7 @@ class Cliente extends Model
         'apellido',
         'nombre_mascota',
     ];
+    protected $hidden = [
+        'numero_documento',
+    ];
 }
